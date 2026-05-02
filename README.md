@@ -33,6 +33,12 @@ Skills live in both `.agents/` and `.claude/` (Claude Code doesn't inherit from 
 
 ## Usage
 
+After cloning, rename the project (replaces `python-template` everywhere, runs `uv sync`, deletes itself):
+
+```bash
+./rename.sh my-new-project
+```
+
 ```bash
 uv sync                # install deps
 uv run main.py         # run
