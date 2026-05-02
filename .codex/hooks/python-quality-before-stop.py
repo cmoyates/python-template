@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stop hook: run Ruff and ty on the whole project; continue if issues remain."""
+"""Stop hook: run Ruff (format + check --fix), ty, and pytest; block stop if issues remain."""
 
 from __future__ import annotations
 
@@ -36,17 +36,21 @@ def main() -> None:
     project_dir = project_dir_from(payload)
     issues: list[str] = []
 
-    fmt_code, fmt_out = run(["uv", "run", "--quiet", "ruff", "format", "--check", "."], project_dir)
-    if fmt_code != 0:
-        issues.append(f"ruff format --check (run `uv run ruff format .` to fix):\n{fmt_out}")
+    fmt_code, fmt_out = run(["uv", "run", "--quiet", "ruff", "format", "."], project_dir)
+    if fmt_code != 0 and fmt_out:
+        issues.append(f"ruff format:\n{fmt_out}")
 
-    lint_code, lint_out = run(["uv", "run", "--quiet", "ruff", "check", "."], project_dir)
+    lint_code, lint_out = run(["uv", "run", "--quiet", "ruff", "check", "--fix", "."], project_dir)
     if lint_code != 0:
-        issues.append(f"ruff check:\n{lint_out}")
+        issues.append(f"ruff check --fix:\n{lint_out}")
 
     ty_code, ty_out = run(["uv", "run", "--quiet", "ty", "check"], project_dir)
     if ty_code != 0:
         issues.append(f"ty check:\n{ty_out}")
+
+    pytest_code, pytest_out = run(["uv", "run", "--quiet", "pytest"], project_dir)
+    if pytest_code not in (0, 5):
+        issues.append(f"pytest:\n{pytest_out}")
 
     if issues:
         print(

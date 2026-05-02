@@ -9,6 +9,7 @@ Opinionated starting point for new Python projects. Clone, rename, build.
 - **[uv](https://github.com/astral-sh/uv)** — project and package management
 - **[Ruff](https://github.com/astral-sh/ruff)** — formatting, linting, import sorting
 - **[ty](https://github.com/astral-sh/ty)** — type checking
+- **[pytest](https://github.com/pytest-dev/pytest)** — testing
 
 ### Editor (VS Code)
 
@@ -23,7 +24,7 @@ Opinionated starting point for new Python projects. Clone, rename, build.
 
 ### AI agents
 
-Pre-wired for **Claude Code** (`.claude/`) and **OpenAI Codex CLI** (`.codex/`). Hooks run Ruff format, lint-fix, and import-sort automatically after the agent edits files, so AI-generated code matches the same standards as save-on-format.
+Pre-wired for **Claude Code** (`.claude/`) and **OpenAI Codex CLI** (`.codex/`). Hooks run Ruff format, lint-fix, and import-sort automatically after the agent edits files, so AI-generated code matches the same standards as save-on-format. A stop hook also runs Ruff, `ty`, and `pytest` over the whole project before the agent finishes — blocking on type errors or failing tests.
 
 Skills live in both `.agents/` and `.claude/` (Claude Code doesn't inherit from `.agents/`), preloaded with:
 
@@ -38,7 +39,10 @@ uv run main.py         # run
 uv run ruff check      # lint
 uv run ruff format     # format
 uv run ty check        # typecheck
+uv run pytest          # test
 ```
+
+Tests live under `tests/`; source on the import path lives under `src/`. Markers `unit`, `integration`, and `slow` are pre-registered in `pyproject.toml`.
 
 ## Configuration
 

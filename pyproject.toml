@@ -8,6 +8,7 @@ dependencies = []
 
 [dependency-groups]
 dev = [
+    "pytest>=9.0.3",
     "ruff>=0.15.12",
     "ty>=0.0.34",
 ]
@@ -33,3 +34,19 @@ indent-style = "space"
 line-ending = "auto"
 
 [tool.ty]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = [
+  "-ra",
+  "--strict-markers",
+  "--strict-config",
+  "--import-mode=importlib",
+]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+  "unit: fast isolated tests",
+  "integration: tests that touch filesystem, database, subprocesses, or external services",
+  "slow: tests that are useful but too slow for every edit loop",
+]
