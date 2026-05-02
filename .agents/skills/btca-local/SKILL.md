@@ -9,6 +9,14 @@ BTCA Local, aka "The Better Context App Local" is a simple app defined as a skil
 
 ## the BTCA Search Workflow
 
+Before doing any BTCA work, always spawn the custom sub-agent `btca_local_researcher` and have that sub-agent execute the BTCA workflow.
+
+Do not use the miscellaneous general sub-agent for BTCA if `btca_local_researcher` is available.
+
+The main agent should treat BTCA as delegated work and only use the sub-agent's findings to answer the user.
+
+If `btca_local_researcher` is unavailable for some reason, fall back to a built-in read-heavy explorer-style sub-agent and say that you had to fall back.
+
 <guidelines>
     <guideline>
         if the user includes a direct like to a github repo, always load and reference that

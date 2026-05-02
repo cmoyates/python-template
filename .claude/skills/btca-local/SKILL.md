@@ -35,9 +35,9 @@ BTCA Local, aka "The Better Context App Local" is a simple app defined as a skil
         if the repo(s) are already in the work dir ~/.btca/agent/sandbox update them, otherwise clone them. clone the main branch by default, unless the user asks for something else
     </step>
     <step name="search">
-        search the repo for the information you need. make sure to follow the guidelines
+        delegate the search to the built-in `Explore` subagent (read-only, optimized for codebase search). pass it: the cloned repo path under ~/.btca/agent/sandbox, the user's question, and a thoroughness level (`quick` for targeted lookups, `medium` for balanced exploration, `very thorough` for comprehensive analysis). require it to return file paths + line numbers for citations and any code snippets needed to answer. do not search the repo yourself — keep raw search output out of the main context. follow the guidelines when synthesizing the subagent's response.
     </step>
-<workflow>
+</workflow>
 
 <end_goal>
 a clear, concise answer to the question with code examples
