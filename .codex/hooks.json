@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/python-quality-after-edit.py\"",
+            "timeout": 180,
+            "statusMessage": "Running Ruff and ty after Python edit"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/python-quality-before-stop.py\"",
+            "timeout": 300,
+            "statusMessage": "Running final Python quality check"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+# Project-scoped Codex configuration.
+#
+# Codex loads this file only after the project is trusted.
+# Hook behavior is defined in hooks.json next to this file.
+
+[features]
+codex_hooks = true
